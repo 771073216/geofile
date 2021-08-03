@@ -44,15 +44,15 @@ jobs:
           rm -f GeoLite2-Country-CSV.zip
           mv GeoLite2*/* geoip
 
-      - name: Check and upload
+      - name: Build geofile
         run: |
-          
           cd geoip || exit 1
           go run ./ -outputdir=../publish/ --country=./GeoLite2-Country-Locations-en.csv --ipv4=./GeoLite2-Country-Blocks-IPv4.csv --countrycode=cn
           cd ..
           rm -rf geoip/
           bash build.sh
           mv geosite.dat publish/
+
       - name: Generate SHA-256 checksum
         run: |
           pushd publish || exit 1

@@ -35,20 +35,12 @@ jobs:
           repository: AkinoKaede/geoip
           path: geoip
 
-      - name: Get GeoLite2
-        env:
-          LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE }}
-        run: |
-          curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=${LICENSE_KEY}&suffix=zip" -o GeoLite2-Country-CSV.zip
-          unzip GeoLite2-Country-CSV.zip
-          rm -f GeoLite2-Country-CSV.zip
-          mv GeoLite2*/* geoip
-
       - name: Build geofile
         run: |
-          cd geoip || exit 1
-          go run ./ -outputdir=../publish/ --country=./GeoLite2-Country-Locations-en.csv --ipv4=./GeoLite2-Country-Blocks-IPv4.csv --countrycode=cn
-          cd ..
+          echo "id,country" > geoip/location.csv
+          echo "ip,id" > geoip/ip.csv
+          curl -sSL https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt | sed 's/$/&,1814991/g' >> geoip/ip.csv
+          go run ./ -outputdir=../publish/ --country=./geoip/location.csv --ipv4=./geoip/ip.csv --countrycode=cn
           rm -rf geoip/
           bash build.sh
           mv geosite.dat publish/

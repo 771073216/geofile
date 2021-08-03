@@ -37,11 +37,13 @@ jobs:
 
       - name: Build geofile
         run: |
-          echo "geoname_id,locale_code,continent_code,continent_name,country_iso_code" >> geoip/location.csv
-          echo "1814991,en,AS,Asia,CN" >> geoip/location.csv
-          echo "ip,id" >> geoip/ip.csv
-          curl -sSL https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt | sed 's/$/&,1814991/g' >> geoip/ip.csv
-          go run ./ -outputdir=../publish/ --country=./geoip/location.csv --ipv4=./geoip/ip.csv --countrycode=cn
+          cd geoip || exit 1
+          echo "geoname_id,locale_code,continent_code,continent_name,country_iso_code" >> location.csv
+          echo "1814991,en,AS,Asia,CN" >> location.csv
+          echo "ip,id" >> ip.csv
+          curl -sSL https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt | sed 's/$/&,1814991/g' >> ip.csv
+          go run ./ -outputdir=../publish/ --country=./location.csv --ipv4=./ip.csv --countrycode=cn
+          cd ..
           rm -rf geoip/
           bash build.sh
           mv geosite.dat publish/

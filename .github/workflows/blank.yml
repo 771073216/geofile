@@ -1,0 +1,35 @@
+name: sync
+on:
+  schedule:
+    - cron: "00 23 * * 6"
+  watch:
+      types: started
+jobs:
+  build:
+    name: Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go 1.x.y
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+
+      - name: Checkout out project files
+        uses: actions/checkout@v2.3.4
+
+      - name: Checkout v2fly/domain-list-community
+        uses: actions/checkout@v2
+        with:
+          repository: v2fly/domain-list-community
+          path: community
+
+      - name: Check and upload
+        run: |
+          bash build.sh
+          wget -q https://raw.githubusercontent.com/AkinoKaede/geoip/release/cnip.dat -O geoip.dat
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Sync: $(date +%Y%m%d)"
+          git push
+          

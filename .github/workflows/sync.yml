@@ -34,15 +34,14 @@ jobs:
           LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE }}
         run: |
           curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=${LICENSE_KEY}&suffix=zip" -o GeoLite2-Country-CSV.zip
-          unzip GeoLite2-Country-CSV.zip
+          unzip GeoLite2-Country-CSV.zip -d geoip
           rm -f GeoLite2-Country-CSV.zip
-          mv GeoLite2* geoip
 
       - name: Check and upload
         run: |
           bash build.sh
           cd geoip || exit 1
-          go run ./ -outputdir=../ --country=./GeoLite2-Country-Locations-en.csv --ipv4=./GeoLite2-Country-Blocks-IPv4.csv --countryCode=cn
+          go run ./ -outputdir=../ --country=./GeoLite2-Country-Locations-en.csv --ipv4=./GeoLite2-Country-Blocks-IPv4.csv --countrycode=cn
           cd ..
           rm -rf geoip/
           git config --local user.name "github-actions[bot]"

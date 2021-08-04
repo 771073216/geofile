@@ -36,7 +36,7 @@ main() {
   findinclude
   sed -i '/^#/d' out
   sed '/^$/d' out | sort --ignore-case -u > own/category-ads-all
-  go run ./ --datapath=own/ --outputname=geosite.dat --outputdir=../
+  go run ./ --datapath=own/ --outputname=geosite.dat --outputdir=../publish/
   cd ..
   rm -rf community
 }

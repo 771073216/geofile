@@ -46,7 +46,6 @@ jobs:
           cd ..
           rm -rf geoip/
           bash build.sh
-          mv geosite.dat publish/
 
       - name: Generate SHA-256 checksum
         run: |

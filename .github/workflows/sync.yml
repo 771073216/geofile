@@ -23,11 +23,11 @@ jobs:
       - name: Checkout out project files
         uses: actions/checkout@v2.3.4
 
-      - name: Checkout v2fly/domain-list-community
+      - name: Checkout Loyalsoldier/domain-list-custom
         uses: actions/checkout@v2
         with:
-          repository: v2fly/domain-list-community
-          path: community
+          repository: Loyalsoldier/domain-list-custom
+          path: domain-list-custom
           
       - name: Checkout AkinoKaede/geoip
         uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
           repository: AkinoKaede/geoip
           path: geoip
 
-      - name: Build geofile
+      - name: Build geoip
         run: |
           cd geoip || exit 1
           echo "geoname_id,locale_code,continent_code,continent_name,country_iso_code" >> location.csv
@@ -45,7 +45,21 @@ jobs:
           go run ./ -outputdir=../publish/ --country=./location.csv --ipv4=./ip.csv --countrycode=cn
           cd ..
           rm -rf geoip/
-          bash build.sh
+
+      - name: Build geosite
+        run: |
+          cd domain-list-custom || exit 1
+          CHINA_DOMAINS_URL="https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
+          cn_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
+          ad_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/category-ads-all.txt"
+          mkdir own
+          curl -sSL $cn_url > own/cn
+          curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> own/cn
+          curl -sSL $ad_url > own/category-ads
+          cp own/category-ads own/category-ads-all
+          go run ./ --datapath=own/ --outputpath=../publish/ --exportlists=
+          cd ..
+          rm -rf domain-list-custom
 
       - name: Generate SHA-256 checksum
         run: |

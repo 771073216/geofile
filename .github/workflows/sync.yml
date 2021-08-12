@@ -57,7 +57,8 @@ jobs:
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> own/cn
           curl -sSL $ad_url > own/category-ads
           cp own/category-ads own/category-ads-all
-          go run ./ --datapath=own/ --outputpath=../publish/ --exportlists=
+          go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
+          rm ../publish/gfwlist.txt
           cd ..
           rm -rf domain-list-custom
 

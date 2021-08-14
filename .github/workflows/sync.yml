@@ -68,7 +68,6 @@ jobs:
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
           curl -sSL $cn_url | grep -v "regexp:" | awk -F":" '{print$2}' | grep "\." > tmp.txt
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> tmp.txt
-          
           sort -u tmp.txt > publish/chnlist.txt
           rm tmp.txt
 

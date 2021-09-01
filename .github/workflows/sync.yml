@@ -58,6 +58,10 @@ jobs:
           sort -u tmp.txt > publish/chnlist.txt
           rm tmp.txt
 
+      - name: Build smartdns proxy file
+        run: |
+          wget -qO- https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt | sed -e 's/^\.//g' -e 's|\(.*\)|domain-rules /\1/ -n oversea -c none|' > publish/proxy.conf
+          
       - name: Generate SHA-256 checksum
         run: |
           pushd publish || exit 1

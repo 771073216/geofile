@@ -47,7 +47,7 @@ jobs:
 
       - name: Build geoip
         run: |
-          wget https://github.com/Loyalsoldier/geoip/raw/release/cn.dat -O publish/geoip.dat
+          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip-only-cn-private.dat -O publish/geoip.dat
 
       - name: Build chnlist
         run: |

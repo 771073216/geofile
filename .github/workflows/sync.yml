@@ -21,7 +21,7 @@ jobs:
         shell: bash
 
       - name: Checkout out project files
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
 
       - name: Checkout Loyalsoldier/domain-list-custom
         uses: actions/checkout@v2
@@ -32,13 +32,13 @@ jobs:
       - name: Build geosite
         run: |
           cd domain-list-custom || exit 1
-          CHINA_DOMAINS_URL="https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
-          cn_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
-          ad_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/category-ads-all.txt"
+          cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
+          ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
+          proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
           mkdir own
           curl -sSL $cn_url > own/cn
-          curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> own/cn
           curl -sSL $ad_url > own/category-ads
+          curl -sSL $proxy_url > own/proxy
           cp own/category-ads own/category-ads-all
           go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
           rm ../publish/gfwlist.txt
@@ -51,17 +51,12 @@ jobs:
 
       - name: Build chnlist
         run: |
-          CHINA_DOMAINS_URL="https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
-          cn_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
-          curl -sSL $cn_url | grep -v "regexp:" | awk -F":" '{print$2}' | grep "\." > tmp.txt
-          cp tmp.txt publish/chnlistlite.txt
-          curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> tmp.txt
-          sort -u tmp.txt > publish/chnlist.txt
-          rm tmp.txt
+          cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
+          curl -sSL $cn_url | grep -v "regexp:" | awk -F":" '{print$2}' | grep "\." > publish/chnlist.txt
 
       - name: Build smartdns proxy file
         run: |
-          wget -qO- https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt | sed -e 's/^\.//g' -e 's|\(.*\)|domain-rules /\1/ -n oversea -c none|' > publish/proxy.conf
+          wget -qO- https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt | grep -v ":" | sed -e 's|\(.*\)|domain-rules /\1/ -n oversea -c none|' > publish/proxy.conf
           
       - name: Generate SHA-256 checksum
         run: |
@@ -84,24 +79,17 @@ jobs:
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f origin release
 
-      - name: Create a release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v0.1.14
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          name: ${{ env.RELEASE_NAME }}
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
-
-      - name: Upload release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./publish/*
-          tag: ${{ env.TAG_NAME }}
-          file_glob: true
+          files: |
+            ./publish/*
 
       - name: Clean-up releases
         uses: dev-drprasad/delete-older-releases@v0.2.0

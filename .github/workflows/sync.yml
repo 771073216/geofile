@@ -52,7 +52,7 @@ jobs:
       - name: Build chnlist
         run: |
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
-          curl -sSL $cn_url | grep -v ":" | awk -F":" '{print$2}' > publish/chnlist.txt
+          curl -sSL $cn_url | grep -v ":" > publish/chnlist.txt
 
       - name: Build smartdns proxy file
         run: |

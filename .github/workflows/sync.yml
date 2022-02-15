@@ -51,10 +51,6 @@ jobs:
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           curl -sSL $cn_url | grep -v ":" > publish/chnlist.txt
 
-      - name: Build smartdns proxy file
-        run: |
-          wget -qO- https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt | grep -v ":" | sed -e 's|\(.*\)|domain-rules /\1/ -n oversea -c none|' > publish/proxy.conf
-          
       - name: Generate SHA-256 checksum
         run: |
           pushd publish || exit 1

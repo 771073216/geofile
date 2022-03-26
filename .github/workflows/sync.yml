@@ -37,9 +37,6 @@ jobs:
           curl -sSL $ad_url > own/category-ads
           curl -sSL $proxy_url > own/gfw
           cp own/category-ads own/category-ads-all
-          sed -i '/steamstatic.com/d' own/gfw
-          echo "cm.steampowered.com" >> own/cn
-          echo "steamstatic.com" >> own/cn
           go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
           rm ../publish/gfwlist.txt
           cd ..

@@ -1,0 +1,27 @@
+{
+  "input": [
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "cn",
+        "uri": "./dl.txt",
+        "onlyIPType": "ipv4"
+      }
+    },
+    {
+      "type": "private",
+      "action": "add"
+    }
+  ],
+  "output": [
+    {
+      "type": "v2rayGeoIPDat",
+      "action": "output",
+      "args": {
+        "outputName": "geoip.dat",
+        "wantedList": ["cn", "private"]
+      }
+    }
+  ]
+}

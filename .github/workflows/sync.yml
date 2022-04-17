@@ -12,7 +12,7 @@ jobs:
       - name: Setup Go 1.x.y
         uses: actions/setup-go@v3
         with:
-          go-version: ^1.16
+          go-version: ^1.18
 
       - name: Set variables
         run: |
@@ -25,6 +25,12 @@ jobs:
         with:
           repository: Loyalsoldier/domain-list-custom
           path: domain-list-custom
+      
+      - name: Checkout Loyalsoldier/geoip
+        uses: actions/checkout@v3
+        with:
+          repository: Loyalsoldier/geoip
+          path: geoip
 
       - name: Build geosite
         run: |
@@ -44,7 +50,14 @@ jobs:
 
       - name: Build geoip
         run: |
-          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip-only-cn-private.dat -O publish/geoip.dat
+          cd geoip || exit 1
+          cp ../config.json .
+          curl -sSL https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/geolite2_country/country_cn.netset | grep -v '#' > dl.txt
+          curl -sSL https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt >> dl.txt
+          go run ./
+          mv output/dat/geoip.dat ../publish/
+          cd ..
+          rm -rf geoip
 
       - name: Build chnlist
         run: |

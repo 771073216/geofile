@@ -42,6 +42,8 @@ jobs:
           curl -sSL $cn_url > own/cn
           curl -sSL $ad_url > own/category-ads
           curl -sSL $proxy_url > own/gfw
+          sed -i 's/^cn.bing.com$/bing.com/g' own/cn
+          sed -i 's/^cn.bing.net$/bing.com/g' own/cn
           cp own/category-ads own/category-ads-all
           go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
           rm ../publish/gfwlist.txt

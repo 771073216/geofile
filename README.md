@@ -5,7 +5,3 @@
 - **geosite.dat**：
   - [https://github.com/771073216/geofile/releases/latest/download/geosite.dat](https://github.com/771073216/geofile/releases/latest/download/geosite.dat)
   - [https://gcore.jsdelivr.net/gh/771073216/geofile@release/geosite.dat](https://gcore.jsdelivr.net/gh/771073216/geofile@release/geosite.dat)
-# rules
-- **chnlist.txt**：
-  - [https://github.com/771073216/geofile/releases/latest/download/chnlist.txt](https://github.com/771073216/geofile/releases/latest/download/chnlist.txt)
-  - [https://gcore.jsdelivr.net/gh/771073216/geofile@release/chnlist.txt](https://gcore.jsdelivr.net/gh/771073216/geofile@release/chnlist.txt)

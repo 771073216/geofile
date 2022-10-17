@@ -45,6 +45,7 @@ jobs:
           sed -i 's/^cn.bing.com$/bing.com/g' own/cn
           sed -i 's/^cn.bing.net$/bing.net/g' own/cn
           echo "favicon.yandex.net" >> own/cn
+          echo "microsofttranslator.com" >> own/cn
           cp own/category-ads own/category-ads-all
           go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
           rm ../publish/gfwlist.txt

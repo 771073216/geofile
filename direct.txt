@@ -1,2 +1,3 @@
 favicon.yandex.net
 microsofttranslator.com
+res.res.res.res

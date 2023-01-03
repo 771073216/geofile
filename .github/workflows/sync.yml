@@ -25,7 +25,6 @@ jobs:
           proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
           mkdir domain_data
           curl -sSL $cn_url > direct1
-          curl -sSL $custom_direct > direct2
           curl -sSL $ad_url > domain_data/category-ads
           curl -sSL $proxy_url > domain_data/gfw
           awk '{print$0}' direct1 direct.txt > domain_data/cn

@@ -9,58 +9,37 @@ jobs:
     name: Sync
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Go 1.x.y
-        uses: actions/setup-go@v3
-        with:
-          go-version: ^1.18
-
       - name: Set variables
         run: |
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "RELEASE_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         shell: bash
 
-      - name: Checkout Loyalsoldier/domain-list-custom
+      - name: Checkout out project files
         uses: actions/checkout@v3
-        with:
-          repository: Loyalsoldier/domain-list-custom
-          path: domain-list-custom
-      
-      - name: Checkout Loyalsoldier/geoip
-        uses: actions/checkout@v3
-        with:
-          repository: Loyalsoldier/geoip
-          path: geoip
 
       - name: Build geosite
         run: |
-          cd domain-list-custom || exit 1
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
           proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
-          custom_direct="https://raw.githubusercontent.com/771073216/geofile/main/direct.txt"
-          mkdir own
+          mkdir domain_data
           curl -sSL $cn_url > direct1
           curl -sSL $custom_direct > direct2
-          curl -sSL $ad_url > own/category-ads
-          curl -sSL $proxy_url > own/gfw
-          awk '{print$0}' direct1 direct2 > own/cn
-          sed -i 's/^cn.bing.com$/bing.com/g' own/cn
-          sed -i 's/^cn.bing.net$/bing.net/g' own/cn
-          cp own/category-ads own/category-ads-all
-          go run ./ --datapath=own/ --outputpath=../publish/ --exportlists= --togfwlist=
-          rm ../publish/gfwlist.txt
-          cd ..
-          rm -rf domain-list-custom
+          curl -sSL $ad_url > domain_data/category-ads
+          curl -sSL $proxy_url > domain_data/gfw
+          awk '{print$0}' direct1 direct.txt > domain_data/cn
+          sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
+          sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
+          cp domain_data/category-ads domain_data/category-ads-all
+          ./tools/geosite_maker
 
       - name: Build geoip
         run: |
-          cd geoip || exit 1
-          curl -sSL https://raw.githubusercontent.com/771073216/geofile/main/config.json > config.json
-          go run ./
-          mv output/dat/geoip.dat ../publish/
-          cd ..
-          rm -rf geoip
+          mkdir ip_data
+          curl -sSL https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt > ip_data/cn.txt
+          curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt >> ip_data/cn.txt
+          ./tools/geoip_maker
 
       - name: Generate SHA-256 checksum
         run: |

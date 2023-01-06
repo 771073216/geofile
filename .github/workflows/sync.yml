@@ -31,14 +31,14 @@ jobs:
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           cp domain_data/category-ads domain_data/category-ads-all
-          ./tools/geosite_maker
+          ./tools/geofile_maker -mode geosite
 
       - name: Build geoip
         run: |
           mkdir ip_data
           curl -sSL https://ispip.clang.cn/all_cn.txt > ip_data/cn.txt
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt >> ip_data/cn.txt
-          ./tools/geoip_maker
+          ./tools/geofile_maker -mode geoip
 
       - name: Generate SHA-256 checksum
         run: |

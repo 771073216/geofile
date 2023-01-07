@@ -39,15 +39,6 @@ jobs:
           curl -sSL https://ispip.clang.cn/all_cn.txt > ip_data/cn.txt
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt >> ip_data/cn.txt
           ./tools/geofile_maker -sha256sum -mode geoip
-          
-#      - name: Generate SHA-256 checksum
-#        run: |
-#          pushd publish || exit 1
-#          for FILE in `ls *.dat`
-#          do
-#            sha256sum $FILE > $FILE.sha256sum
-#          done
-#          popd || exit 1
 
       - name: Git push assets to "release" branch
         run: |

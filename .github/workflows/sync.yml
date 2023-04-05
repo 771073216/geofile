@@ -28,8 +28,6 @@ jobs:
           curl -sSL $ad_url > domain_data/category-ads
           curl -sSL $proxy_url > domain_data/gfw
           awk '{print$0}' direct1 direct.txt > domain_data/cn
-          #sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
-          #sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           cp domain_data/category-ads domain_data/category-ads-all
           ./tools/geofile_maker -sha256sum -mode geosite
 

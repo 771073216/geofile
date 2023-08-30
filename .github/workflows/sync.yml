@@ -35,8 +35,8 @@ jobs:
       - name: Build geoip
         run: |
           mkdir ip_data
-          curl -sSL https://ispip.clang.cn/all_cn.txt > ip_data/cn.txt
-          curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt >> ip_data/cn.txt
+          #curl -sSL https://ispip.clang.cn/all_cn.txt > ip_data/cn.txt
+          curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
           ./tools/geofile_maker -sha256sum -mode geoip
 
       - name: Git push assets to "release" branch

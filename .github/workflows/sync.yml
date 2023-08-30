@@ -23,10 +23,12 @@ jobs:
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
           proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
+          private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
           curl -sSL $cn_url > direct1
           curl -sSL $ad_url > domain_data/category-ads-all
           curl -sSL $proxy_url > domain_data/gfw
+          curl -sSL $private_url > domain_data/private
           awk '{print$0}' direct1 direct.txt > domain_data/cn
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn

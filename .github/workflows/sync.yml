@@ -33,6 +33,8 @@ jobs:
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           ./tools/geofile_maker -sha256sum -mode geosite
+          ./tools/sing-box-geosite ./publish/geosite.dat ./publish/geosite.db
+          sha256sum ./publish/geosite.db > ./publish/geosite.db.sha256sum
 
       - name: Build geoip
         run: |
@@ -43,6 +45,8 @@ jobs:
           mv ./publish/geoip.dat ./publish/geoip-old.dat
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
           ./tools/geofile_maker -sha256sum -mode geoip
+          ./tools/sing-box-geoip -s ./ip_data/cn.txt -d ./publish/geoip.db
+          sha256sum ./publish/geoip.db > ./publish/geoip.db.sha256sum
 
       - name: Git push assets to "release" branch
         run: |

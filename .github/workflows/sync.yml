@@ -33,7 +33,7 @@ jobs:
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           ./tools/geofile_maker -sha256sum -mode geosite
-          ./tools/sing-box-geosite ./publish/geosite.dat ./publish/geosite.db
+          ./tools/sing-box-geosite -src_path ./publish/geosite.dat -dst_path ./publish/geosite.db
           sha256sum ./publish/geosite.db > ./publish/geosite.db.sha256sum
 
       - name: Build geoip

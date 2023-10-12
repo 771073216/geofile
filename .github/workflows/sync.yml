@@ -20,8 +20,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: go.mod
-          cache-dependency-path: go.sum
+          cache: false
 
       - name: Build geosite
         run: |

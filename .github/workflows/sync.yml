@@ -22,7 +22,7 @@ jobs:
 
       - name: Build geosite
         run: |
-          go install -trimpath -ldflags="-s -w -buildid=" github.com/metacubex/geo/cmd/geo@master
+          
           geo
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
@@ -34,18 +34,22 @@ jobs:
           curl -sSL $proxy_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
           awk '{print$0}' direct1 direct.txt > domain_data/cn
-          sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
-          sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
+          #sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
+          #sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           ./tools/geofile_maker -sha256sum -mode geosite
-          ./tools/geo convert site -i v2ray -o sing -f ./publish/geosite.db ./publish/geosite.dat
-          sha256sum ./publish/geosite.db > ./publish/geosite.db.sha256sum
 
       - name: Build geoip
         run: |
           mkdir ip_data
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
           ./tools/geofile_maker -sha256sum -mode geoip
-          ./tools/geo convert ip -i v2ray -o sing -f ./publish/geoip.db ./publish/geoip.dat
+          
+      - name: Convert geo
+        run: |
+          go install -trimpath -ldflags="-s -w -buildid=" github.com/metacubex/geo/cmd/geo@master
+          geo convert site -i v2ray -o sing -f ./publish/geosite.db ./publish/geosite.dat
+          geo convert ip -i v2ray -o sing -f ./publish/geoip.db ./publish/geoip.dat
+          sha256sum ./publish/geosite.db > ./publish/geosite.db.sha256sum
           sha256sum ./publish/geoip.db > ./publish/geoip.db.sha256sum
 
       - name: Git push assets to "release" branch

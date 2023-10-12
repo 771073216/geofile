@@ -2,8 +2,7 @@ name: sync
 on:
   schedule:
     - cron: "00 23 * * 5"
-  watch:
-      types: started
+  workflow_dispatch:
 jobs:
   build:
     name: Sync

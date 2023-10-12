@@ -18,6 +18,9 @@ jobs:
       - name: Checkout out project files
         uses: actions/checkout@v4
 
+      - name: Setup Go
+        uses: actions/setup-go@v4
+
       - name: Build geosite
         run: |
           go install -trimpath -ldflags="-s -w -buildid=" github.com/metacubex/geo/cmd/geo@master

@@ -37,13 +37,13 @@ jobs:
           awk '{print$0}' direct1 direct.txt > domain_data/cn
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
-          ./tools/geofile_maker -sha256sum -mode geosite
+          ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
       - name: Build geoip
         run: |
           mkdir ip_data
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
-          ./tools/geofile_maker -sha256sum -mode geoip
+          ./tools/geofile_maker -sha256sum -mode geoip -datapath ip_data
           
       - name: Convert geo
         run: |

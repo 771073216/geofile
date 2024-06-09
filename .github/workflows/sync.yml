@@ -37,6 +37,9 @@ jobs:
           awk '{print$0}' direct1 direct.txt > domain_data/cn
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
+          sed -i '/^bing$/d' domain_data/gfw
+          sed -i '/^bing.com$/d' domain_data/gfw
+          sed -i '/^bing.net$/d' domain_data/gfw
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
       - name: Build geoip

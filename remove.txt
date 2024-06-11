@@ -1,3 +1,7 @@
 bing
 bing.com
 bing.net
+microsoft
+microsoft.com
+apple
+apple.com

@@ -27,7 +27,7 @@ jobs:
         run: |
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
-          proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
+          proxy_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
           private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
           curl -sSL $cn_url > direct1
@@ -37,7 +37,6 @@ jobs:
           awk '{print$0}' direct1 direct.txt > domain_data/cn
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
-          diff -b remove.txt gfw | awk '/^>/{print $2}' > domain_data/gfw
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
       - name: Build geoip

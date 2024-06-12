@@ -38,6 +38,8 @@ jobs:
           sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
           sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
+          sed -e 's|\(.*\)|local-zone: "\1." static\n|' domain_data/category-ads-all > reject.unbound.conf
+          sed -e 's|\(.*\)|forward-zone:\n  name: "\1."\n  forward-addr: 127.0.0.1@5335\n|' domain_data/cn > direct.unbound.conf
 
       - name: Build geoip
         run: |

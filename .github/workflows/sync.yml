@@ -63,6 +63,8 @@ jobs:
           sed -e 's|\(.*\)|forward-zone:\n  name: "\1."\n  forward-addr: 127.0.0.1@53\n|' domain_data/cn >> ./publish/direct.unbound.conf
           sha256sum ./publish/reject.unbound.conf > ./publish/reject.unbound.conf.sha256sum
           sha256sum ./publish/direct.unbound.conf > ./publish/direct.unbound.conf.sha256sum
+          cp domain_data/cn ./publish/direct.txt
+          cp domain_data/category-ads-all ./publish/reject.txt
 
       - name: Git push assets to "release" branch
         run: |

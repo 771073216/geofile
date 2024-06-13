@@ -53,18 +53,6 @@ jobs:
           geo convert ip -i v2ray -o sing -f ./publish/geoip.db ./publish/geoip.dat
           sha256sum ./publish/geosite.db > ./publish/geosite.db.sha256sum
           sha256sum ./publish/geoip.db > ./publish/geoip.db.sha256sum
-          
-
-      - name: Make Unbound
-        run: |
-          echo "server:" > ./publish/reject.unbound.conf
-          sed -e 's|\(.*\)|local-zone: "\1." static\n|' domain_data/category-ads-all >> ./publish/reject.unbound.conf
-          echo -e "server:\ndo-not-query-localhost: no" > ./publish/direct.unbound.conf
-          sed -e 's|\(.*\)|forward-zone:\n  name: "\1."\n  forward-addr: 127.0.0.1@53\n|' domain_data/cn >> ./publish/direct.unbound.conf
-          sha256sum ./publish/reject.unbound.conf > ./publish/reject.unbound.conf.sha256sum
-          sha256sum ./publish/direct.unbound.conf > ./publish/direct.unbound.conf.sha256sum
-          cp domain_data/cn ./publish/direct.txt
-          cp domain_data/category-ads-all ./publish/reject.txt
 
       - name: Git push assets to "release" branch
         run: |

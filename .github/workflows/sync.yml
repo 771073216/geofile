@@ -36,10 +36,10 @@ jobs:
           curl -sSL $private_url > domain_data/private
 
           cat direct-add.txt >> direct_tmp
-          diff -b direct-remove.txt direct_tmp | awk '/^>/{print $2}' > domain_data/cn
+          diff direct-remove.txt direct_tmp | awk '/^>/{print $2}' > domain_data/cn
 
           cat proxy-add.txt >> gfw_tmp
-          diff -b proxy-remove.txt gfw_tmp | awk '/^>/{print $2}' > domain_data/gfw
+          diff proxy-remove.txt gfw_tmp | awk '/^>/{print $2}' > domain_data/gfw
 
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 

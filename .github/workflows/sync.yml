@@ -30,13 +30,17 @@ jobs:
           gfw_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
           private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
-          curl -sSL $cn_url > direct1
+          curl -sSL $cn_url > direct_tmp
           curl -sSL $ad_url > domain_data/category-ads-all
-          curl -sSL $gfw_url > domain_data/gfw
+          curl -sSL $gfw_url > gfw_tmp
           curl -sSL $private_url > domain_data/private
-          awk '{print$0}' direct1 direct.txt > domain_data/cn
-          sed -i 's/^cn.bing$/bing/g' domain_data/cn
-          sed -i 's/^cn.bing$/bing/g' domain_data/cn
+
+          cat direct-add.txt >> direct_tmp
+          diff -b direct-remove.txt direct_tmp | awk '/^>/{print $2}' > domain_data/cn
+
+          cat proxy-add.txt >> gfw_tmp
+          diff -b proxy-remove.txt gfw_tmp | awk '/^>/{print $2}' > domain_data/gfw
+
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
 

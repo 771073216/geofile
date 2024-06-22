@@ -2,3 +2,5 @@ favicon.yandex.net
 res.res.res.res
 googleapis.cn
 xn--ngstr-lra8j.com
+bing.com
+bing.net

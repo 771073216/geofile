@@ -36,10 +36,10 @@ jobs:
           curl -sSL $private_url > domain_data/private
 
           cat direct-add.txt >> direct_tmp
-          python3 ./tools/remove.py -r direct-remove.txt -s direct_tmp -o domain_data/cn
+          python3 ./tools/remove.py -r ./direct-remove.txt -s ./direct_tmp -o ./domain_data/cn
 
           cat proxy-add.txt >> gfw_tmp
-          python3 ./tools/remove.py -r proxy-remove.txt -s gfw_tmp -o domain_data/gfw
+          python3 ./tools/remove.py -r ./proxy-remove.txt -s ./gfw_tmp -o ./domain_data/gfw
 
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 

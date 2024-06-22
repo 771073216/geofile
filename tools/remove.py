@@ -2,6 +2,11 @@ import getopt
 import sys
 
 
+def read(path):
+    origin_data = open(path, 'r', encoding='utf-8').read().splitlines()
+    return list(filter(None, origin_data))
+
+
 def main(argv):
     remove_file = ""
     source_file = ""
@@ -19,8 +24,9 @@ def main(argv):
             source_file = arg
         elif opt in ("-o", "--output"):
             output_file = arg
-    source_data = open(source_file, 'r', encoding='utf-8').read().splitlines()
-    remove_data = open(remove_file, 'r', encoding='utf-8').read().splitlines()
+
+    source_data = read(source_file)
+    remove_data = read(remove_file)
     for i in remove_data:
         try:
             source_data.remove(i)

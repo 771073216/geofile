@@ -19,7 +19,7 @@ def main(argv):
             source_file = arg
         elif opt in ("-o", "--output"):
             output_file = arg
-    print(remove_file, source_file，output_file)
+    print(remove_file, source_file,output_file)
     source_data = open(source_file, 'r', encoding='utf-8').read().splitlines()
     remove_data = open(remove_file, 'r', encoding='utf-8').read().splitlines()
     for i in remove_data:

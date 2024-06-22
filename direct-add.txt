@@ -4,3 +4,4 @@ googleapis.cn
 xn--ngstr-lra8j.com
 bing.com
 bing.net
+steamcontent.com

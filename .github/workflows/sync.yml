@@ -35,8 +35,8 @@ jobs:
           curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
           awk '{print$0}' direct1 direct.txt > domain_data/cn
-          sed -i 's/^cn.bing.com$/bing.com/g' domain_data/cn
-          sed -i 's/^cn.bing.net$/bing.net/g' domain_data/cn
+          sed -i 's/^cn.bing$/bing/g' domain_data/cn
+          sed -i 's/^cn.bing$/bing/g' domain_data/cn
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
 

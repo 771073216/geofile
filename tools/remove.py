@@ -19,14 +19,13 @@ def main(argv):
             source_file = arg
         elif opt in ("-o", "--output"):
             output_file = arg
-    print(remove_file, source_file,output_file)
     source_data = open(source_file, 'r', encoding='utf-8').read().splitlines()
     remove_data = open(remove_file, 'r', encoding='utf-8').read().splitlines()
     for i in remove_data:
         try:
             source_data.remove(i)
         except ValueError:
-            print("%s not in %s" % i, source_file)
+            print("%s not in %s" % (i, source_file))
     output_data = '\n'.join(source_data)
     file_handle = open(output_file, mode='w')
     file_handle.writelines(output_data)

@@ -27,9 +27,9 @@ def main(argv):
             source_data.remove(i)
         except ValueError:
             print("%s not in %s" % i, source_file)
-
+    output_data = '\n'.join(source_data)
     file_handle = open(output_file, mode='w')
-    file_handle.writelines(source_data)
+    file_handle.writelines(output_data)
     file_handle.close()
 
 

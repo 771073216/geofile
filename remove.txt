@@ -5,3 +5,5 @@ microsoft
 microsoft.com
 apple
 apple.com
+xn--ngstr-lra8j.com
+googleapis.cn

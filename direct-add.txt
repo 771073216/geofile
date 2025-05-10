@@ -3,3 +3,5 @@ res.res.res.res
 bing.com
 bing.net
 steamcontent.com
+googleapis.cn
+xn--ngstr-lra8j.com

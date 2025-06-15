@@ -39,7 +39,7 @@ jobs:
 
           ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
 
-          cp ./domain_data/cn ./publish/direct.txt
+          cp ./domain_data/gfw ./publish/gfw.txt
 
 
       - name: Build geoip

@@ -1,4 +1,4 @@
-package main
+package tool
 
 import (
 	"bufio"
@@ -58,7 +58,7 @@ func read(path string) ([]string, error) {
 	return lines, nil
 }
 
-func removeData(targetFile string, removeData []string) {
+func RemoveData(targetFile string, removeData []string) {
 	// 读取源文件
 	sourceData, err := read(targetFile)
 	if err != nil {
@@ -103,7 +103,7 @@ func removeData(targetFile string, removeData []string) {
 	fmt.Printf("Successfully processed. Output written to %s\n", targetFile)
 }
 
-func addData(targetFile string, addData []string) {
+func AddData(targetFile string, addData []string) {
 	// 读取源文件
 	sourceData, err := read(targetFile)
 	if err != nil {
@@ -134,9 +134,7 @@ func addData(targetFile string, addData []string) {
 	fmt.Printf("Successfully processed. Output written to %s\n", targetFile)
 }
 
-func main() {
-	fmt.Println("in")
-	os.Exit(0)
+func RunTool() {
 	flag.Parse()
 	if len(*makeMode) == 0 {
 		fmt.Println("-mode [geoip|geosite]")
@@ -156,11 +154,11 @@ func main() {
 		}
 		var config Config
 		toml.DecodeFile(*customPath, &config)
-		addData(*directPath, config.Direct.Add)
-		removeData(*directPath, config.Direct.Remove)
+		AddData(*directPath, config.Direct.Add)
+		RemoveData(*directPath, config.Direct.Remove)
 
-		addData(*proxyPath, config.Proxy.Add)
-		removeData(*proxyPath, config.Proxy.Remove)
+		AddData(*proxyPath, config.Proxy.Add)
+		RemoveData(*proxyPath, config.Proxy.Remove)
 
 		geositeEntry()
 		gen_sha256()

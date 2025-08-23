@@ -28,7 +28,7 @@ jobs:
           curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
 
-          go run ./ -mode geosite -datapath domain_data
+          ./tools/geofile_maker -mode geosite -datapath domain_data
 
           cp ./domain_data/cn ./publish/direct.txt
           cp ./domain_data/gfw ./publish/gfw.txt

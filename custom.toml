@@ -16,4 +16,4 @@ remove = ["cn.bing.com", "cn.bing.net"]
 
 add = []
 
-remove = ["xn--ngstr-lra8j.com"]
+remove = ["xn--ngstr-lra8j.com", "google.cn"]

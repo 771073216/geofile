@@ -19,6 +19,8 @@ jobs:
 
       - name: Setup Go environment
         uses: actions/setup-go@v5.5.0
+        with:
+          cache-dependency-path: "tool/go.sum"
 
       - name: Build geosite
         run: |

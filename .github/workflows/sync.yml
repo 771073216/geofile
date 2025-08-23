@@ -19,8 +19,6 @@ jobs:
 
       - name: Setup Go environment
         uses: actions/setup-go@v5.5.0
-        with:
-          cache-dependency-path: "tool/go.sum"
 
       - name: Build geosite
         run: |
@@ -32,7 +30,7 @@ jobs:
           curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
 
-          go run ./ -mode geosite -datapath domain_data
+          go run ./tool -mode geosite -datapath domain_data
 
           cp ./domain_data/cn ./publish/direct.txt
           cp ./domain_data/gfw ./publish/gfw.txt
@@ -42,7 +40,7 @@ jobs:
         run: |
           mkdir ip_data
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
-          ./tools/geofile_maker -sha256sum -mode geoip -datapath ip_data
+          go run ./tool -mode geoip -datapath ip_data
 
       - name: Git push assets to "release" branch
         run: |

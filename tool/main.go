@@ -135,6 +135,8 @@ func addData(targetFile string, addData []string) {
 }
 
 func main() {
+	fmt.Println("in")
+	os.Exit(0)
 	flag.Parse()
 	if len(*makeMode) == 0 {
 		fmt.Println("-mode [geoip|geosite]")

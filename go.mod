@@ -1,4 +1,4 @@
-module geofile
+module tool
 
 go 1.24
 

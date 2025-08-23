@@ -24,20 +24,11 @@ jobs:
           gfw_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
           private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
-          curl -sSL $cn_url > direct_tmp
-          curl -sSL $ad_url > ad_tmp
-          curl -sSL $gfw_url > gfw_tmp
+          curl -sSL $cn_url > domain_data/cn
+          curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
 
-          cat direct-add.txt >> direct_tmp
-          python3 ./tools/remove.py -r ./direct-remove.txt -s ./direct_tmp -o ./domain_data/cn
-
-          cat proxy-add.txt >> gfw_tmp
-          python3 ./tools/remove.py -r ./proxy-remove.txt -s ./gfw_tmp -o ./domain_data/gfw
-
-          python3 ./tools/remove.py -r ./reject-remove.txt -s ./ad_tmp -o ./domain_data/category-ads-all
-
-          ./tools/geofile_maker -sha256sum -mode geosite  -datapath domain_data
+          ./tools/geofile_maker -mode geosite -datapath domain_data
 
           cp ./domain_data/cn ./publish/direct.txt
           cp ./domain_data/gfw ./publish/gfw.txt

@@ -15,12 +15,14 @@ jobs:
         shell: bash
 
       - name: Checkout out project files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Setup Go environment
+        uses: actions/setup-go@v5.5.0
 
       - name: Build geosite
         run: |
           cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
-          ad_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt"
           gfw_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
           private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
@@ -28,7 +30,7 @@ jobs:
           curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
 
-          ./tools/geofile_maker -mode geosite -datapath domain_data
+          go run ./ -mode geosite -datapath domain_data
 
           cp ./domain_data/cn ./publish/direct.txt
           cp ./domain_data/gfw ./publish/gfw.txt

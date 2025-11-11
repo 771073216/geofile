@@ -42,8 +42,6 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
           go run . -mode geoip -datapath ip_data
 
-          cp ip_data/cn.txt ./publish/cnip.txt
-
       - name: Git push assets to "release" branch
         run: |
           cd publish || exit 1

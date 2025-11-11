@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	merge "github.com/EvilSuperstars/go-cidrman"
 	router "github.com/xtls/xray-core/app/router"
 	"google.golang.org/protobuf/proto"
 )
@@ -66,7 +65,7 @@ func getCidrPerFile(dataDirMap map[string][]*router.CIDR) error {
 }
 
 func readFileLineByLine(path string, container *[]*router.CIDR) error {
-	var str []string
+	var cidrStr []string
 	file, err := os.Open(path)
 	if err != nil {
 		return err
@@ -79,10 +78,9 @@ func readFileLineByLine(path string, container *[]*router.CIDR) error {
 		if c == io.EOF {
 			break
 		}
-		str = append(str, string(a))
+		cidrStr = append(cidrStr, string(a))
 	}
-	merged_CIDR, _ := merge.MergeCIDRs(str)
-	for _, cidr := range merged_CIDR {
+	for _, cidr := range cidrStr {
 		cidr1, err := ParseIP(cidr)
 		if err != nil {
 			fmt.Println(err)

@@ -3,7 +3,6 @@ module geofile
 go 1.24
 
 require (
-	github.com/EvilSuperstars/go-cidrman v0.0.0-20190607145828-28e79e32899a
 	github.com/xtls/xray-core v1.250803.0
 	google.golang.org/protobuf v1.36.8
 )

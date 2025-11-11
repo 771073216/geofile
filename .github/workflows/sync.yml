@@ -40,6 +40,7 @@ jobs:
         run: |
           mkdir ip_data
           curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china.txt > ip_data/cn.txt
+          curl -sSL https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china6.txt >> ip_data/cn.txt
           go run . -mode geoip -datapath ip_data
 
       - name: Git push assets to "release" branch

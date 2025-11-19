@@ -1,8 +1,6 @@
 [direct]
 
 add = [
-    "favicon.yandex.net",
-    "res.res.res.res",
     "steamcontent.com",
     "googleapis.cn",
 ]

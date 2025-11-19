@@ -22,18 +22,17 @@ jobs:
 
       - name: Build geosite
         run: |
-          cn_url="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.txt"
+          cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
           gfw_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
           private_url="https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/private.txt"
           mkdir domain_data
           curl -sSL "$cn_url" | grep -v '^[[:space:]]*#' | grep -v '^[[:space:]]*$' | \
-              sed -E '
-                  # 优先处理不以点号开头的行 (精确匹配 -> full:)
-                  # 注意：我将您的 sed 顺序调整为先处理 full:，逻辑更清晰
-                  /^[^.]/ s/^/full:/
-                  # 然后处理以点号开头的行 (子域名通配符 -> domain: 并移除前导点)
-                  /^\./ s/^\./domain:/
-              ' >> domain_data/cn
+            sed -E '
+              # 忽略以(full: 或 regexp:)前缀开头的行
+              /^(full:|regexp:|domain:)/ b
+              # 处理剩下的行 (即没有前缀的裸域名)，在行首添加 domain:
+              s/^/domain:/
+            ' > domain_data/cn
           curl -sSL $gfw_url  | \
             sed -E '
               # 忽略以(full: 或 regexp:)前缀开头的行

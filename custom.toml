@@ -1,8 +1,7 @@
 [direct]
 
 add = [
-    "steamcontent.com",
-    "googleapis.cn",
+    "steamcontent.com"
 ]
 
 remove = []
@@ -11,4 +10,4 @@ remove = []
 
 add = []
 
-remove = ["xn--ngstr-lra8j.com", "google.cn", "googleapis.cn"]
+remove = []

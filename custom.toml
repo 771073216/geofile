@@ -1,8 +1,6 @@
 [direct]
 
-add = [
-    "steamcontent.com"
-]
+add = []
 
 remove = []
 

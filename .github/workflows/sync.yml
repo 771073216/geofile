@@ -29,11 +29,13 @@ jobs:
           curl -sSL $cn_url > domain_data/cn
           curl -sSL $gfw_url > domain_data/gfw
           curl -sSL $private_url > domain_data/private
+          curl -sSL https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/refs/heads/release/google-cn.txt | grep -v cn > domain_data/google
 
           go run . -mode geosite -datapath domain_data
 
           cp ./domain_data/cn ./publish/direct.txt
           cp ./domain_data/gfw ./publish/gfw.txt
+          cp ./domain_data/google ./publish/google.txt
 
 
       - name: Build geoip
